@@ -20,22 +20,14 @@ import java.util.ArrayList;
  */
 public class Conta {
 
-    public static int getContadorContas() {
-        return contadorContas;
-    }
-
-    public static void setContadorContas(int aContadorContas) {
-        contadorContas = aContadorContas;
-    }
-
     private Agencia agencia; // agência associada a esta conta
-    private Pessoa pessoa; // pessoa associada a esta conta
+    private Pessoa cliente; // pessoa associada a esta conta
     private ArrayList<Transacao> transações = new ArrayList<>(); // transações associadas a esta conta
     private int id; // identifica esta conta
     private String numero; //número e dígito da conta
     private double saldo;
     private double limite;
-    private static int contadorContas = 0; //auto incremento para o identificador de cada conta 
+    public static int contadorContas = 0; //auto incremento para o identificador de cada conta 
 
     //construtor vazio
     public Conta() {
@@ -44,7 +36,7 @@ public class Conta {
     //construtor personalizado
     public Conta(Agencia agencia, Pessoa pessoa, int id, String numero, double saldo, double limite) {
         this.agencia = agencia;
-        this.pessoa = pessoa;
+        this.cliente = pessoa;
         this.id = id;
         this.numero = numero;
         this.saldo = saldo;
@@ -60,13 +52,16 @@ public class Conta {
         this.agencia = agencia;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    
+    public Pessoa getCliente() {
+        return cliente;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setCliente(Pessoa cliente) {
+        this.cliente = cliente;
     }
+
+    
 
     public ArrayList<Transacao> getTransações() {
         return transações;
@@ -88,16 +83,8 @@ public class Conta {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
     public double getSaldo() {
         return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
     }
 
     public double getLimite() {
@@ -107,5 +94,7 @@ public class Conta {
     public void setLimite(double limite) {
         this.limite = limite;
     }
+    
+   
     
 }
