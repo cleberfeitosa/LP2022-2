@@ -15,13 +15,7 @@ import java.util.ArrayList;
 */
 public class Banco {
 
-    public static int getContadorBancos() {
-        return contadorBancos;
-    }
-
-    public static void setContadorBancos(int aContadorBancos) {
-        contadorBancos = aContadorBancos;
-    }
+    
     private ArrayList<Agencia> agencias = new ArrayList<>();// Lista de agências
     private int id; // idenficação do banco no Sistema. Não pode repetir
     private String nome; // nome do banco
@@ -43,11 +37,11 @@ public class Banco {
     }
     
     //permite obter a lista de agências
-
     public ArrayList<Agencia> getAgencias() {
         return agencias;
     }
 
+    // difine a lista de agências. Raramente usado
     public void setAgencias(ArrayList<Agencia> agencias) {
         this.agencias = agencias;
     }

@@ -4,10 +4,108 @@
  */
 package entidades;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author clebe
  */
+/*
+  Esta é a classe Conta. Ela está associada a uma única agência
+  e a um único cliente. Lembre-se: um banco pode ter várias agências
+  e uma agência pode ter várias contas, assim como um cliente pode ter
+  várias contas.
+  Uma conta pode ter várias transações, ou seja, um ArrayList de objetos da
+  classe Transacao
+ */
 public class Conta {
+
+    public static int getContadorContas() {
+        return contadorContas;
+    }
+
+    public static void setContadorContas(int aContadorContas) {
+        contadorContas = aContadorContas;
+    }
+
+    private Agencia agencia; // agência associada a esta conta
+    private Pessoa pessoa; // pessoa associada a esta conta
+    private ArrayList<Transacao> transações = new ArrayList<>(); // transações associadas a esta conta
+    private int id; // identifica esta conta
+    private String numero; //número e dígito da conta
+    private double saldo;
+    private double limite;
+    private static int contadorContas = 0; //auto incremento para o identificador de cada conta 
+
+    //construtor vazio
+    public Conta() {
+    }
+
+    //construtor personalizado
+    public Conta(Agencia agencia, Pessoa pessoa, int id, String numero, double saldo, double limite) {
+        this.agencia = agencia;
+        this.pessoa = pessoa;
+        this.id = id;
+        this.numero = numero;
+        this.saldo = saldo;
+        this.limite = limite;
+    }
+//metodos geters e seters
+
+    public Agencia getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(Agencia agencia) {
+        this.agencia = agencia;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    public ArrayList<Transacao> getTransações() {
+        return transações;
+    }
+
+    public void setTransações(ArrayList<Transacao> transações) {
+        this.transações = transações;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
     
 }
