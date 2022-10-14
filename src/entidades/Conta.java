@@ -52,7 +52,6 @@ public class Conta {
         this.agencia = agencia;
     }
 
-    
     public Pessoa getCliente() {
         return cliente;
     }
@@ -60,8 +59,6 @@ public class Conta {
     public void setCliente(Pessoa cliente) {
         this.cliente = cliente;
     }
-
-    
 
     public ArrayList<Transacao> getTransações() {
         return transações;
@@ -94,7 +91,7 @@ public class Conta {
     public void setLimite(double limite) {
         this.limite = limite;
     }
+
     
-   
     
 }

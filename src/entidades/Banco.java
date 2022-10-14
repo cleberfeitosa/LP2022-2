@@ -20,7 +20,7 @@ public class Banco {
     private int id; // idenficação do banco no Sistema. Não pode repetir
     private String nome; // nome do banco
     private String numero; // número do banco
-    private static int contadorBancos= 0; // autoincremento para o identificador de cada banco 
+    public static int contadorBancos= 0; // autoincremento para o identificador de cada banco 
     
     
     // construr vazio
