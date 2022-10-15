@@ -174,16 +174,16 @@ public class Sistema {
                     pesquisaBanco = entrada.nextLine();
                     //chamamos o método que pesquisa o banco
                     temp = pesquisarBanco(pesquisaBanco);
-                    if(temp == null){//banco não encontrado
+                    if (temp == null) {//banco não encontrado
                         System.out.println("\nO banco não foi encontratdo.");
-                    }else{
+                    } else {
                         //mostra o banco encontrado
                         System.out.println("\nDados atuais deste banco:");
                         System.out.println("\nId: " + temp.getId());
                         System.out.println("\nNúmero: " + temp.getNumero());
                         System.out.println("\nNome: " + temp.getNome());
                         System.out.println("\nQuant Agências: " + temp.getAgencias().size());
-                        
+
                         System.out.println("\nInforme os novos dados:");
                         System.out.println("\nNovo Número do Banco: ");
                         String novoNumeroBanco = entrada.nextLine();
@@ -197,10 +197,71 @@ public class Sistema {
                     break;
                 case 6:
                     return 0; // volta para o menu principal
-                
+
             }
         }
 
+    }
+
+    //método que pesquisa um banco pelo id, número ou nome e retorna um objeto da classe Banco
+    public Banco pesquisarBanco(String pesquisaBanco) {
+        Banco b = null;
+
+        //este banco existe?
+        for (int i = 0; i < bancos.size(); i++) {
+            //pesquisa pelo id
+            if (Integer.toString(bancos.get(i).getId()).equals(pesquisaBanco)) {
+                return bancos.get(i);
+            }//pesquisar por nome
+            else if (bancos.get(i).getNome().contains(pesquisaBanco)) {
+                return bancos.get(i);
+            }//pesquisar pelo número
+            else if (bancos.get(i).getNumero().contains(pesquisaBanco)) {
+                return bancos.get(i);
+            }
+        }
+        return b;
+    }
+
+    //menu para cadastrar, listar, pesquisar, excluir e atualizar as pessoas (futuros clientes
+    public int menuGerenciarPessoas() {
+        Pessoa temp; // serve para várias operações neste menu
+        String pesquisaPessoa; //serve para as pesquisas das pessoas 
+        while (true)//mostra o menu de forma repetitiva até o usuário usar a opção de sair
+        {
+            System.out.println("\n:: G E R E N C I A R  P E S S O A S ::");
+            System.out.println("Escolha a opção desejada");
+            System.out.println("1 - Nova Pessoa (Futuro Cliente)");
+            System.out.println("2 - Listar Pessoa");
+            System.out.println("3 - Pesquisar Pessoa");
+            System.out.println("4 - Excluir Pessoa");
+            System.out.println("5 - Atualizar Pessoa");
+            System.out.println("6 - Voltar Menu Anterior");
+            System.out.print("Sua opção: ");
+            int opcao = Integer.parseInt(entrada.nextLine());
+            
+            switch (opcao) {
+                case 1:
+                    System.out.println("\nNome: ");
+                    String nomePessoa = entrada.nextLine();
+                    System.out.println("\nIdade: ");
+                    int idade = Integer.parseInt(entrada.nextLine());
+                    System.out.println("\nSexo: ");
+                    char sexo = entrada.nextLine().charAt(0);
+                   
+                    //vamos incrementar o contador de pessoas
+                    Pessoa.contadorPessoas++;
+                    //agora vamos criar um objeto da classe Pessoa
+                    Pessoa p = new Pessoa(Pessoa.contadorPessoas, nomePessoa, idade, sexo);
+                    //e finalmente mostramos uma mensagem de sucesso.
+                    System.out.println("\nA pessoa foi criada com sucesso.");
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            
+        }
+        
     }
 
 }
