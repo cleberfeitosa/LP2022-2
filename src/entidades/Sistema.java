@@ -357,7 +357,7 @@ public class Sistema {
         String pesquisaAgencia; // serve para as pesquisas das agências
         Banco bancoAtual = null; // guarda o banco atual
         //para gerenciar uma agência nós precisamos de um banco 
-        while (bancoAtual) {
+        while (bancoAtual == null) {
             System.out.println("\nInforme o id, número ou nome do banco: ");
             String pesquisaBanco = entrada.nextLine();
             //chamamos o método que pesquisa o banco
@@ -453,13 +453,176 @@ public class Sistema {
                     if (temp == null) {//agência não encontrada
                         System.out.println("\nA agência não foi encontrada");
                     } else {//mostra a agêcia encontrada
-                        System.out.println(
-                        "n\Dados atuais desta agência:");
-                              System.out.println("\nId: " + temp.getId());
+                        System.out.println("\nDados atuais desta agência:");
+                        System.out.println("\nId: " + temp.getId());
                         System.out.println("\nNúmero: " + temp.getNumero());
                         System.out.println("\nCidade/Estado: " + temp.getCidade());
                         System.out.println("\nQuantas Contas Bancárias: " + temp.getContas().size());
+                        
+                        System.out.println("\nInforme os novos dados:");
+                        System.out.print("\nNovo Número da Agências:");
+                        String novoNumeroAgencia = entrada.nextLine();
+                        System.out.println("\nNova Cidade/Estado da Agência:");
+                        String novaCidadeAgencia = entrada.nextLine();
+                        
+                        //vamos atualizar os dados desta agência no ArrayList() do banco atual
+                        temp.setNumero(novoNumeroAgencia);
+                        temp.setCidade(novaCidadeAgencia);
+                        System.out.println("\nAgência atualizada com sucesso.");
                     }
+                    break;
+                case 6: 
+                    return 0; // volta para o menu principal
+            }
+        }
+    }
+    //método que pesquisa uma agência pela id, número ou cidade e retorna um objeto da classe Agência
+    public Agencia pesquisarAgencia(Banco b, String pesquisaAgencia){
+        Agencia a = null;
+        //esta agência existe?
+        for (int i = 0; i < b.getAgencias().size(); i++) {
+            if(Integer.toString(b.getAgencias().get(i).getId()).equals(pesquisaAgencia)){
+                return b.getAgencias().get(i);
+                //pesquisar por número da agência
+            }else if(b.getAgencias().get(i).getNumero().contains(pesquisaAgencia)){
+                return b.getAgencias().get(i);
+             //pequisr pela cidade   
+            }else if(b.getAgencias().get(i).getCidade().contains(pesquisaAgencia)){
+                return b.getAgencias().get(i);
+            }
+        }
+        return a;
+    }
+    //menu cadastrar, Listar, pesquisar, excluir e atualizar as contas
+    public int menuGerenciarContas(){
+        Conta temp; //serve para várias operações neste menu
+        String pesquisaConta; //serve para as pesquisas das contas 
+        Banco bancoAtual = null; //guarda o banco atual
+        Agencia agenciaAtual = null;//guarda a agência atual
+        
+        //para gerenciar uma conta nós precisamos primeiro de um banco
+        while(bancoAtual == null){
+            System.out.print("\nInforme o id, número ou nome do banco:");
+            String pesquisaBanco = entrada.nextLine();
+            //chamamos o método que pesquisa o banco
+            Banco b = pesquisarBanco(pesquisaBanco);
+            if(b == null){//banco não encontrado
+                System.out.println("\nO banco não foi encontrado.\n\nDigite 1 para pesquisar novamente ou 2 para voltar ao menu anterior:  ");
+                int opcao = Integer.parseInt(entrada.nextLine());
+                if(opcao == 2){
+                    return 1; //saímos daqui e voltamos para o menu anterior
+                }
+                
+            }else{//banco encontrado. Vamos prosseguir com as agências
+                bancoAtual = b;
+            }
+        }
+        //agora que já temos o banco, vamos selecionar a agência
+        while(agenciaAtual == null){
+            System.out.print("\nInforme o id, número ou a cidade da agência: ");
+            String pesquisaAgencia = entrada.nextLine();
+            //chamamos o método que pesquia a agência
+            Agencia a = pesquisarAgencia(bancoAtual, pesquisaAgencia);
+            if(a == null){//agência não encontrada
+                System.out.print("\nA agência não foi encontrada.\n\nDigite 1 para pesquisar novamente ou 2 para voltar ao menu anterior: ");
+                int opcao = Integer.parseInt(entrada.nextLine());
+                if(opcao == 2){
+                    return 1 ;// saímos daqui e voltamos para o menu anterior
+                }
+            }else{//agência encontrada
+                agenciaAtual = a;
+            }
+        }
+        //Atenção: o menu abaixo deverá ser exibido somente se um banco e uma agência forem selecionados
+        
+        while(true){//mostra o menu de forma repetitiva até o usuário usar a opção de sair
+            System.out.println("\n::G E R E N C I A R  C O N T A S ::\n");
+            System.out.println("Banco selecionado: "+bancoAtual.getNome());
+            System.out.println("Agência selecionada: "+agenciaAtual.getNumero()+ " "+agenciaAtual.getCidade()+ "\n");
+            
+            System.out.println("Escolha a opção desejada");
+            System.out.println("1 - Abertura de Nova Conta");
+            System.out.println("2 - Listar Contas");
+            System.out.println("3 - Pessquisar Conta");
+            System.out.println("4 - Excluir Conta");
+            System.out.println("5 - Atualizar Conta");
+            System.out.println("6 - Voltar ao Menu Anterior");
+            System.out.print("Sua opção: ");
+            int opcao = Integer.parseInt(entrada.nextLine());//Lê a opção do usuário
+            switch (opcao) {
+                case 1://vamos abrir/cadastrar uma nova conta
+                    System.out.print("\nNúmero da Conta:");
+                    String numeroConta = entrada.nextLine();
+                    System.out.print("Limite da Conta: ");
+                    double limiteConta = Double.parseDouble(entrada.nextLine());
+                    //para abrir uma nova conta nós precisamos de um cliente
+                    Pessoa cliente = null; // o cliente para o qual uma nova conta será aberta
+                    while(cliente == null){
+                        System.out.print("\nInforme o id ou nome do cliente:");
+                        String pesquisaPessoa = entrada.nextLine();
+                        cliente = pesquisarPessoa(pesquisaPessoa);
+                        if(cliente ==null){
+                            System.out.print("Cliente não encontrado.\n\nDigite 1 para pesquisar novamente ou 2 para voltar ao menu anterior: ");
+                            int opcaoTemp = Integer.parseInt(entrada.nextLine());
+                            if(opcaoTemp == 2){
+                                return 1;// saímos daqui e voltamos para o menu anterior
+                            }
+                        }
+                    }
+                    //vamos incrementar o contador de contas
+                    Conta.contadorContas++;
+                    //agora vamos criar um novo objeto da classe Conta
+                    Conta c = new Conta(agenciaAtual, cliente, opcao, numeroConta, 0.0, limiteConta);
+                    //e o adicionamos no ArrayList da agência selecionada do banco selecionado
+                    agenciaAtual.getContas().add(c);
+                    //e finalmente mostramos uma mensagem de sucesso.
+                    System.out.print("\n Uma nova conta foi criada para o cliente: "+cliente.getNome()+"\ncom saldo inicial de R$ 0,00 e limite inical de R$ "+limiteConta);
+                    break;
+                case 2: //vamos Listar as contas cadastradas para a agência e o banco selecionado
+                    if(agenciaAtual.getContas().isEmpty()){
+                        System.out.print("\nNão há nenhuma conta cadatrada nesta agência");
+                  }else{
+                        for (int i = 0; i < agenciaAtual.getContas().size(); i++) {
+                            temp = agenciaAtual.getContas().get(i);//obtém a conta da iteração atual
+                            System.out.print("\nId da conta bancária: "+temp.getId());
+                            System.out.print("\nNúmero da conta bancária: "+temp.getNumero());
+                            System.out.print("\nCliente: "+temp.getCliente().getNome());
+                            System.out.print("\nAgência: "+agenciaAtual.getNumero()+"- "+agenciaAtual.getCidade());
+                            System.out.print("\nBanco: "+bancoAtual.getNumero()+"- "+bancoAtual.getNome());
+                            System.out.println("Saldo atual: "+ temp.getSaldo());
+                            System.out.println("Limite atual: "+ temp.getLimite());
+                         }
+                    } 
+                    break;
+                case 3://pesquisar uma conta
+                    System.out.print("\nINforme o id, número ou nome do cliente da conta:");
+                    pesquisaConta = entrada.nextLine();
+                    //chamamos o métod que pesquisa a conta
+                    temp = pesquisarConta(agenciaAtual, pesquisaConta);
+                    if(temp == null){//conta não encontrada
+                        System.out.print("\nA conta não foi encontrada nesta agência");
+                    }else{//mostra a conta encontrada
+                        System.out.print("\nId da conta bancária: "+temp.getId());
+                        System.out.print("\nNúmero da conta : "+temp.getNumero());
+                        System.out.print("\nCliente : "+temp.getCliente().getNome());
+                        System.out.print("\nAgência : "+agenciaAtual.getNumero()+" "+agenciaAtual.getCidade());
+                        System.out.print("\nBanco : "+bancoAtual.getNumero()+" "+bancoAtual.getNome());
+                        System.out.print("\nSaldo atual : "+temp.getSaldo());
+                        System.out.print("\nLimite atual : "+temp.getLimite());
+                    }
+                    break;
+                case 4: // vamos excluir uma conta
+                    System.out.print("\nInforme o id, número ou nome do cliente da conta:");
+                    pesquisaConta = entrada.nextLine();
+                    //chamamos o método que pesquisa a conta
+                    temp = pesquisarConta(agenciaAtual, pesquisaConta);
+                    if(temp == null){// conta não encontrada
+                        System.out.print("\nA conta não foi encontrada nesta agência");
+                    }else{//vamos excluir a conta desta agência
+                        agenciaAtual.getContas().remove(temp);
+                        System.out.print("\nConta excluída com sucesso.");
+                    }
+                    break;
             }
         }
     }
